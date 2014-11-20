@@ -1,7 +1,101 @@
 body{
   font-family: sans-serif;
+  transition: background .25s;
 }
 
 line{
   stroke:#08f;
+}
+
+#ok{
+  position:absolute;
+  left:50%;
+  top:50%;
+  color: #fff;
+  font-size:200px;
+  margin-top:-100px;
+  margin-left:-100px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#ok {
+  display: none;
+}
+.started #ok {
+  display: block;
+  transition: color .25s;
+}
+
+.s-x #ok{
+  color: #fff;
+}
+
+.s-x body{
+  background: #ccc;
+}
+
+
+
+.s-0 #ok{
+  color: #4CDD4E;
+}
+
+.s-1 body{
+  background: #000;
+}
+
+.s-2 body{
+  background: #08f;
+}
+.s-2 #ok{
+  color: #fff;
+}
+
+
+.s-3 body{
+  background: #f08;
+}
+.s-3 #ok{
+  color: #fff;
+}
+
+.s-4 body{
+  background: #fc0;
+}
+.s-4 #ok{
+  color: #fff;
+}
+
+
+.s-5 body{
+  background: #ff0;
+}
+.s-5 #ok{
+  color: #000;
+}
+
+
+.s-6 body{
+  background: #fff;
+}
+.s-6 #ok{
+  color: #08f;
+}
+
+
+.s-7 body{
+  background: #fff;
+}
+.s-7 #ok{
+  color: #f08;
+}
+
+
+.s-8 body{
+  background: #fff;
+}
+.s-8 #ok{
+  color: #000;
 }

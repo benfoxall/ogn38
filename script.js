@@ -1,5 +1,98 @@
+function htmlC(name){
+  document.getElementsByTagName('html')[0].className = name
+}
+
+
+
 var r = repeater()
 .when(4, function(timestamp){
+
+  htmlC('started s-0');
+
+  // how long a timeout would be to hit the common
+  // timestamp (will be negative)
+  var start = - ((+ new Date()) - timestamp);
+
+  start += 4000;
+
+  for(var i = 1 ; i <= 3; i++){
+    start += 1000;
+    change(i, start)
+  }
+  start += 1000;
+  change(0, start)
+
+  start += 2000;
+
+
+  for(var i = 1 ; i <= 3; i++){
+    start += 500;
+    change(i, start)
+  }
+  start += 500;
+  change(0, start)
+
+
+  start += 2000;
+
+  for(var i = 1 ; i <= 3; i++){
+    start += 250;
+    change(i, start)
+  }
+  start += 250;
+  change(0, start)
+
+
+
+  start += 2000;
+  change('x', start)
+
+  function change(i, time){
+    setTimeout(function(){
+      document.getElementById('content').innerHTML = '';
+      console.log('started s-' + i)
+      htmlC('started s-' + i);
+    }, time)
+  }
+
+
+  // console.log(start);
+
+  // setTimeout(function(){
+  //   document.getElementById('content').innerHTML = '';
+  //   htmlC('started s-2')
+  // },start + 10000)
+
+  // setTimeout(function(){
+  //   htmlC('started s-3')
+  // },start + 15000)
+
+  // setTimeout(function(){
+  //   htmlC('started s-4')
+  // },start + 20000)
+
+  // setTimeout(function(){
+  //   htmlC('started s-5')
+  // },start + 25000)
+
+  // setTimeout(function(){
+  //   htmlC('started s-6')
+  // },start + 30000)
+
+  // setTimeout(function(){
+  //   htmlC('started s-7')
+  // },start + 25000)
+
+  // setTimeout(function(){
+  //   htmlC('started s-8')
+  // },start + 30000)
+
+  // setTimeout(function(){
+  //   htmlC('started s-0')
+  // },start + 25000)
+
+
+
   // this.pause();
   // show the animation
   // this.resume();
@@ -13,6 +106,15 @@ var r = repeater()
 })
 
 
+// var i = 0;
+// bean.on(document.body, 'keydown', function(){
+//   document.getElementsByTagName('html')[0].className = 'started s-' + i;
+//   i++;
+//   if(i > 8) i = 0;
+// })
+// bean.on(window, 'touchstart', function(){
+  // alert(":OK")
+// })
 
 
 
@@ -44,6 +146,7 @@ function repeater(){
   }
 
   bean.on(document.body, 'keydown', handler)
+  bean.on(window, 'touchstart', handler)
   
   return self;
 
