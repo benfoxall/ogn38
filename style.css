@@ -2,12 +2,18 @@ body{
   font-family: sans-serif;
   transition: background .25s;
 }
-
-line{
-  stroke:#08f;
+#content{
+  transition: opacity 1.5s; 
+}
+#content{
+  opacity: 1;
+}
+.started #content {
+  opacity: 0;
 }
 
 #ok{
+  display: none;
   position:absolute;
   left:50%;
   top:50%;
@@ -18,14 +24,12 @@ line{
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
-}
-
-#ok {
-  display: none;
+  transform: scale(0.001);
+  transition: all .5s;
+  transform: scale(1);
 }
 .started #ok {
   display: block;
-  transition: color .25s;
 }
 
 .s-x #ok{
@@ -36,6 +40,9 @@ line{
   background: #ccc;
 }
 
+.s-ready #ok{
+  transform: scale(0.001);
+}
 
 
 .s-0 #ok{

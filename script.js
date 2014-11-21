@@ -2,101 +2,98 @@ function htmlC(name){
   document.getElementsByTagName('html')[0].className = name
 }
 
+function _className(className){
+  return function(){
+    document.getElementsByTagName('html')[0].className = className   
+  }
+}
+
+function _content(html){
+  return function(){
+    document.getElementById('content').innerHTML = html   
+  }
+}
+
+
+// window.addEventListener("orientationchange", function() {
+//   alert(window.orientation);
+// }, false);
+
+// alert(window.orientation);
+
+
+function vis_a(offset, done){
+  console.log("offf", offset)
+
+  var _ = timeoutQueue();
+
+  // animate text out, and tick in
+  _
+  (_className(state('ready')))
+  (1000)
+  (_className(state(0)))
+
+  // sync up
+  (offset || 0)
+
+  (_content(''))
+
+
+  for(var i = 1 ; i <= 4; i++){_
+    (1500)
+    (_className(state(i%4)))
+  }
+
+  _(2000)
+
+
+  for(var i = 1 ; i <= 4; i++){_
+    (1000)
+    (_className(state(i%4)))
+  }
+
+  _(2000)
+
+  for(var i = 1 ; i <= 4; i++){_
+    (500)
+    (_className(state(i%4)))
+  }
+
+  _(2000)
+
+  for(var i = 1 ; i <= 4; i++){_
+    (250)
+    (_className(state(i%4)))
+  }
+
+  _(2000)
+
+  (_className(state('x')))
+
+  (done||0)
+
+  function state(i){
+    return 'started s-' + i;
+  }
+
+}
+
+
 
 
 var r = repeater()
 .when(4, function(timestamp){
+  var self = this;
 
-  htmlC('started s-0');
+  // 5 seconds after the average of samples
+  // possibly slightly might be negative
+  var start = 5000 - ((+ new Date()) - Math.floor(timestamp));
 
-  // how long a timeout would be to hit the common
-  // timestamp (will be negative)
-  var start = - ((+ new Date()) - timestamp);
+  self.pause();
+  vis_a(start, function(){
+    self.resume();
+  })
 
-  start += 4000;
-
-  for(var i = 1 ; i <= 3; i++){
-    start += 1000;
-    change(i, start)
-  }
-  start += 1000;
-  change(0, start)
-
-  start += 2000;
-
-
-  for(var i = 1 ; i <= 3; i++){
-    start += 500;
-    change(i, start)
-  }
-  start += 500;
-  change(0, start)
-
-
-  start += 2000;
-
-  for(var i = 1 ; i <= 3; i++){
-    start += 250;
-    change(i, start)
-  }
-  start += 250;
-  change(0, start)
-
-
-
-  start += 2000;
-  change('x', start)
-
-  function change(i, time){
-    setTimeout(function(){
-      document.getElementById('content').innerHTML = '';
-      console.log('started s-' + i)
-      htmlC('started s-' + i);
-    }, time)
-  }
-
-
-  // console.log(start);
-
-  // setTimeout(function(){
-  //   document.getElementById('content').innerHTML = '';
-  //   htmlC('started s-2')
-  // },start + 10000)
-
-  // setTimeout(function(){
-  //   htmlC('started s-3')
-  // },start + 15000)
-
-  // setTimeout(function(){
-  //   htmlC('started s-4')
-  // },start + 20000)
-
-  // setTimeout(function(){
-  //   htmlC('started s-5')
-  // },start + 25000)
-
-  // setTimeout(function(){
-  //   htmlC('started s-6')
-  // },start + 30000)
-
-  // setTimeout(function(){
-  //   htmlC('started s-7')
-  // },start + 25000)
-
-  // setTimeout(function(){
-  //   htmlC('started s-8')
-  // },start + 30000)
-
-  // setTimeout(function(){
-  //   htmlC('started s-0')
-  // },start + 25000)
-
-
-
-  // this.pause();
-  // show the animation
-  // this.resume();
-  console.log("4 times", timestamp)
 })
 .when(8, function(timestamp){
   console.log("8 times")
@@ -106,17 +103,21 @@ var r = repeater()
 })
 
 
-// var i = 0;
-// bean.on(document.body, 'keydown', function(){
-//   document.getElementsByTagName('html')[0].className = 'started s-' + i;
-//   i++;
-//   if(i > 8) i = 0;
-// })
-// bean.on(window, 'touchstart', function(){
-  // alert(":OK")
-// })
+// pretty rubbish animation keyframing (but interesting api)
+function timeoutQueue(initial){
+  var time = initial || 0;
 
+  function add(obj){
+    if(typeof obj == 'function'){
+      if(time >= 0) setTimeout(obj, time)
+    } else {
+      time += obj;
+    }
+    return add;
+  }
 
+  return add;
+}
 
 
 
