@@ -21,16 +21,13 @@ var clean = require('gulp-clean');
 
 var paths = {
   js:[
-    "./bower_components/d3/d3.js",
     "./bower_components/bean/bean.js",
-    "./bower_components/tweenjs/src/Tween.js",
-    "./syncDemo.js",
-    "./ps.js",
-    "./client.js"
+    "./bower_components/hammerjs/hammer.js",
+    "./script.js"
   ],
   css: ['style.css','icons/style.css'],
 
-  assets: ['icons/ps*', 'demo-bg.jpg', '*.mp3']
+  assets: ['icons/ps*', 'floorplan.jpg', '*.mp3']
 }
 
 
@@ -57,8 +54,7 @@ gulp.task('css', function() {
 gulp.task('html', ['js', 'css'], function() {
   var sources = gulp.src(['*.js','*.css'], {cwd:'./dist'});
 
-  return gulp.src('client.html')
-    .pipe(rename('index.html'))
+  return gulp.src('index.html')
     .pipe(inject(sources, {addRootSlash: false}))
     .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
     .pipe(gulp.dest('dist'))
