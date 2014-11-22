@@ -2,6 +2,10 @@ body{
   font-family: sans-serif;
   transition: background .25s;
 }
+#fullscreen{
+  float:right;
+  font-size: 1em
+}
 #content{
   transition: opacity 1.5s; 
 }
@@ -12,14 +16,14 @@ body{
   opacity: 0;
 }
 
-#ok{
+#ok, .arrow{
   display: none;
   position:absolute;
   left:50%;
-  top:50%;
+  top: 50%;
   color: #fff;
   font-size:200px;
-  margin-top:-100px;
+  margin-top: -100px;
   margin-left:-100px;
   pointer-events: none;
   user-select: none;
@@ -31,6 +35,55 @@ body{
 .started #ok {
   display: block;
 }
+
+.arrow{
+  display: block;
+  color: #507696;
+  transform: rotate(-90deg);
+  transition: none;
+}
+.arrow.transition{
+ transition: all 1s;
+}
+.arrow.top{
+  top:0;
+  margin-top: 0;
+}
+
+#locator{
+  background-image: url(floorplan.jpg);
+  
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  bottom:0;
+  top:0;
+  left:0;
+  right:0;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  cursor: move;
+  display: none;
+}
+
+#locator.active{
+  display: block;
+}
+#marker{
+  position: absolute;
+  font-size: 40px;
+  left:50%;
+  top:50%;
+  width: 40px;
+  margin-left: -20px;
+  height: 40px;
+  margin-top: -20px;
+  /* margin-left: 100%; */
+  /* opacity: 0.8; */
+  color: rgba(79, 87, 242, 0.9);
+  /* cursor: move; */
+}
+
 
 .s-x #ok{
   color: #fff;
