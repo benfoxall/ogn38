@@ -1,6 +1,13 @@
 body{
-  font-family: sans-serif;
+  font-family: Helvetica Neue, sans-serif;
   transition: background .25s;
+}
+#url{
+  /*font-size: 3em;*/
+  text-align: right;
+  margin: 0;
+  color: #f08;
+  border-bottom: 1px solid #eee;
 }
 #fullscreen{
   float:right;
@@ -11,6 +18,7 @@ body{
 }
 #content{
   opacity: 1;
+  color: #242424;
 }
 .started #content {
   opacity: 0;
@@ -158,4 +166,29 @@ body{
 }
 .s-8 #ok{
   color: #000;
+}
+
+
+
+
+@media (min-width: 300px) {
+  #url{
+    font-size: 50px;
+  }
+  #content{
+    font-size: 1.5em;
+  }
+}
+
+
+@media (min-width: 500px) {
+  #url{
+    font-size: 80px;
+  }
+
+  #content{
+    font-size: 2em;
+    max-width: 20em;
+    margin:auto;
+  }
 }

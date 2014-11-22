@@ -1,14 +1,6 @@
 // This is all hacks
 // --------
 
-
-
-
-
-
-
-
-
 function htmlC(name){
   document.getElementsByTagName('html')[0].className = name
 }
