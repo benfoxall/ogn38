@@ -23,6 +23,8 @@ var paths = {
   js:[
     "./bower_components/bean/bean.js",
     "./bower_components/hammerjs/hammer.js",
+    "./lib/latlong.js",
+    "./bower_components/tweenjs/src/Tween.js",
     "./script.js"
   ],
   css: ['style.css','icons/style.css'],

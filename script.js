@@ -94,6 +94,97 @@ var locator = (function(){
 
 
 
+var places = {
+  jt: {
+    coords: new LatLon(51.760161, -1.266465),
+    name: "Jericho Tavern"
+  },
+  jt_bar: {
+    coords: (new LatLon(51.760161, -1.266465)).destinationPoint(330,0.005),
+    name: "The Bar"
+  },
+  jt_centre: {
+    coords: (new LatLon(51.760161, -1.266465)).destinationPoint(80,0.002),
+    name: "JS Oxford"
+  },
+  jt_stage: {
+    coords: (new LatLon(51.760161, -1.266465)).destinationPoint(225,0.010),
+    name: "Me"
+  },
+  st_clements: {
+    coords: new LatLon(51.750794, -1.238725),
+    name: "My House"
+  },
+  wo: {
+    coords: new LatLon(51.747683, -1.239902),
+    name: "White October"
+  },
+  pri: {
+    coords: new LatLon(56.396033, -3.453172),
+    name: "Perth Royal Infirmary"
+  },
+  castle: {
+    coords: new LatLon(51.751757, -1.263117),
+    name: "Oxford Castle"
+  },
+  train_station: {
+    coords: new LatLon(51.753464, -1.269833),
+    name: "Oxford Train Station"
+  },
+  pheonix: {
+    coords: new LatLon(51.760297, -1.266662),
+    name: "Pheonix Picture House"
+  },
+  pitt_rivers: {
+    coords: new LatLon(51.758787, -1.255327),
+    name: "Pitt Rivers Museum"
+  },
+  big_ben: {
+    coords: new LatLon(51.500729, -0.124625),
+    name: "London (Big Ben)"
+  },
+  jsac: {
+    coords: new LatLon(51.476020, -3.17931),
+    name: "?"
+  }
+}
+
+// var JTBack  = new LatLon(51.760162, -1.266468),
+//     JTFront = new LatLon(51.760128, -1.266528);
+
+var origin = places.jt.coords,
+    current = places.jt.coords,
+    offset_bearing = 47;
+
+
+
+function display(place){ 
+  document.getElementById('place_name').innerHTML = place.name;
+
+  new TWEEN.Tween( { lon: current.lon, lat: current.lat } )
+    .to( place.coords, 2000 )
+    .onUpdate( function () {
+      var distance = origin.distanceTo(this);
+      var bearing = origin.bearingTo(this) + offset_bearing;
+      document.getElementById('place_distance').innerHTML = format_distance(distance);
+      document.getElementById('arrow').style.transform = 'rotate(' + bearing + 'deg)';
+
+    })
+    .start();
+
+  current = place.coords;
+
+}
+
+
+function animate() {
+  requestAnimationFrame( animate );
+  TWEEN.update();
+}
+animate();
+
+
+
 
 
 
@@ -376,3 +467,32 @@ function repeater(){
             clearTimeout(id);
         };
 }());
+
+
+
+function format_distance(km){
+  
+  // less than a cm
+  if(km < 0.00001)
+    return '<1cm'
+  
+  // less than a m
+  if(km < 0.001)
+    return Math.round(km*100000) + 'cm'
+  
+  // less than a km
+  if(km < 1)
+    return Math.round(km*1000) + 'm'
+  
+  // 10 km
+  if(km < 10)
+    return (km).toPrecision(3) + 'km'
+
+
+  return Math.round(km) + 'km'
+
+}
+
+
+
+
