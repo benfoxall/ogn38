@@ -67,6 +67,26 @@
   </div>
 
   <span id="ok" class="icon-">ok</span>
+
+  <!-- TODO - inline, and remove using:
+  JSON.stringify(
+    [].reduce.call(document.querySelectorAll('[data-slide]'), function(memo, item){ 
+      memo[item.dataset.slide] = item.innerHTML.replace(/\n/g,'').replace(/\s+/g,' ');
+      return memo
+    }, {})
+  )
+  -->
+  <div style="display:none">
+    <section data-slide="hello">
+      <h1>Hello, I'm Ben</h1>
+      <p>I'm going to show you some stuff</p>
+    </section>
+
+    <section data-slide="warning">
+      <h1>A note about demos&hellip;</h1>
+      <h1 class="fragment">&hellip;and timing</h1>
+    </section>
+  </div>
   
   <!-- inject:js -->
   <!-- DON'T FORGET TO UPDATE GULP -->
@@ -76,6 +96,7 @@
   <script src="bower_components/tweenjs/src/Tween.js"></script>
   <script src="bower_components/fittext/fittext.js"></script>
   <script src="lib/latlong.js"></script>
+  <script src="talk.js"></script>
   <script src="script.js"></script>
 
   <!-- endinject -->

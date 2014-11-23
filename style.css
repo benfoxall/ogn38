@@ -214,6 +214,15 @@ a{
 }
 
 
+.fragment{
+  opacity: 0;
+  transition: opacity .5s;
+}
+.fragment-active{
+  opacity: 1;
+  transition: opacity .5s;
+}
+
 
 
 /*
