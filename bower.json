@@ -17,6 +17,7 @@
     "hammerjs": "~2.0.4",
     "bean": "~1.0.14",
     "d3": "~3.4.13",
-    "tweenjs": "*"
+    "tweenjs": "*",
+    "fittext": "*"
   }
 }
