@@ -45,6 +45,9 @@
   function body_className(className){
     body.className = className
   }
+  function body_css(prop, value){
+    body.style[prop] = value
+  }
 
 
 
@@ -72,6 +75,9 @@
 
   // Content
   function intro(talk){
+    talk.queue(function(){
+      body_className('')
+    })
 
     talk.slide('hello')
     talk.pause(20000)
@@ -82,31 +88,31 @@
     talk.pause(15000)
 
     talk.slide('title')
-    talk.pause(15000)
+    talk.pause(5000)
     talk.fragment()
-    talk.pause(20000)
+    talk.pause(30000)
 
     talk.slide('meta')
-    talk.pause(15000)
+    talk.pause(30000)
 
     talk.slide('sync-intro')
     talk.pause(15000)
 
     talk.slide('sync-web')
-    talk.pause(15000)
+    talk.pause(8000)
     talk.fragment()
-    talk.pause(5000)
+    talk.pause(4000)
     talk.fragment()
-    talk.pause(5000)
+    talk.pause(4000)
     talk.fragment()
     talk.pause(20000)
 
     talk.slide('sync-environment')
-    talk.pause(15000)
+    talk.pause(8000)
     talk.fragment()
-    talk.pause(5000)
+    talk.pause(10000)
     talk.fragment()
-    talk.pause(5000)
+    talk.pause(10000)
     talk.fragment()
     talk.pause(20000)
 
@@ -142,6 +148,10 @@
           bg(hsl_basic(this.h,1,0.3*stepper10(this.t)));
         })
     )
+
+    talk.queue(function(){
+      body_css('background','')
+    })
   }
 
   function locationIntro(talk){
@@ -174,29 +184,37 @@
   }
 
   function locationGeneral(talk){
-    // talk.queue(function(){
-    //   body_className('content-hidden map')
-    // })
+    talk.queue(function(){
+      body_className('content-hidden map')
+    })
 
-    // talk.pause(10000)
+    talk.pause(10000)
 
     talk.queue(function(){
       body_className('content-hidden map direction')
     })
 
-    talk.pause(10000)
+    talk.queue(display(places.pheonix, true))
+    talk.pause(6000)
 
-    talk.queue(display(places.pheonix))
+    talk.queue(display(places.pitt_rivers))
+    talk.pause(6000)
 
-    talk.pause(10000)
+    talk.queue(display(places.wo))
+    talk.pause(6000)
 
-    talk.queue(display(places.pri))
+    talk.queue(display(places.st_clements))
+    talk.pause(6000)
 
-    talk.pause(10000)
+    talk.queue(display(places.castle))
+    talk.pause(6000)
 
     talk.queue(display(places.big_ben))
+    talk.pause(6000)
 
-    talk.pause(10000)
+    talk.queue(display(places.jsac))
+    talk.pause(6000)
+
   }
 
   function inputLocation(talk){
@@ -205,7 +223,7 @@
       body_className('content-hidden')
     })
 
-    talk.pause(5000)
+    talk.pause(4000)
 
     talk.queue(function(){
       locator.start()
@@ -217,34 +235,43 @@
       locator.stop()
     })
 
-    talk.pause(5000)
+    talk.pause(4000)
 
   }
 
   function locationSpecific(talk){
-    // talk.queue(function(){
-    //   body_className('content-hidden map')
-    // })
-
-    // talk.pause(10000)
 
     talk.queue(function(){
       body_className('content-hidden xmap direction')
     })
 
-    talk.pause(10000)
+    talk.queue(display(places.jt, true))
+    talk.pause(6000)
 
     talk.queue(display(places.jt_bar))
+    talk.pause(6000)
 
-    talk.pause(10000)
+    // talk.queue(display(places.jt_bar_pump_left))
+    // talk.pause(6000)
+
+    // talk.queue(display(places.jt_bar_pump_right))
+    // talk.pause(6000)
 
     talk.queue(display(places.jt_centre))
+    talk.pause(6000)
 
-    talk.pause(10000)
+    talk.queue(display(places.jt_corner))
+    talk.pause(6000)
+
+    talk.queue(display(places.jt_round_corner))
+    talk.pause(6000)
+
+    talk.queue(display(places.jt_round_pillar))
+    talk.pause(6000)
 
     talk.queue(display(places.jt_stage))
+    talk.pause(6000)
 
-    talk.pause(10000)
 
   }
 

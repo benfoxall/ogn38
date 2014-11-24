@@ -1,6 +1,8 @@
 // This is all hacks
 // --------
 
+var transformProp = vendorCSSProp('transform');
+
 function htmlC(name){
   document.getElementsByTagName('html')[0].className = name
 }
@@ -20,14 +22,33 @@ function _content(html){
 // position within the space
 var x = 0.5, y = 0.5;
 
+function localCoords(from){
+  var mapBearing = 45,
+      mapScale = 0.017,
+      _x = (x-0.5)*-1, // flip the x because of something
+      _y = y-0.5,
+      bearing, distance;
+
+  bearing = Math.atan2(_x, _y);
+
+  if(bearing < 0) bearing += Math.PI*2;
+
+  bearing = (((bearing/Math.PI)*180) + mapBearing) % 360;
+
+  distance = Math.sqrt((_x*_x) + (_y*_y)) * mapScale;
+
+  // console.log(bearing, distance)
+
+  return from.destinationPoint(bearing, distance)
+}
 
 
 var locator = (function(){
   var element = document.getElementById('locator'),
       started;
 
-  var floor_width = 500,
-      floor_height = 589,
+  var floor_width = 421,
+      floor_height = 541,
       window_width = window.innerWidth,
       window_height = window.innerHeight;
 
@@ -41,6 +62,7 @@ var locator = (function(){
   function displayPosition(){
     var bx = (window_width*0.5) + ((x-0.5) * floor_width * -1) - (floor_width/2),
         by = (window_height*0.5) + ((y-0.5) * floor_height * -1) - (floor_height/2);
+    
 
     element.style.backgroundPosition = bx + 'px ' + by + 'px';
   }
@@ -61,7 +83,13 @@ var locator = (function(){
     if(ev.isFinal){
       x0 = x;
       y0 = y;
+
+      origin = localCoords(places.jt.coords);
     }
+
+    // uncomment to find local positions
+    // var ll = localCoords(places.jt.coords);
+    // console.log('new LatLon(%s,%s),', ll.lat.toPrecision(9), ll.lon.toPrecision(9))
   });
 
 
@@ -84,6 +112,7 @@ var locator = (function(){
       if(!active) return;
       active = false;
       element.className = '';
+      origin = localCoords(places.jt.coords);
     },
     toggle:function(){
       this[active ? 'stop' : 'start']();
@@ -99,18 +128,43 @@ var places = {
     coords: new LatLon(51.760161, -1.266465),
     name: "Jericho Tavern"
   },
+
   jt_bar: {
-    coords: (new LatLon(51.760161, -1.266465)).destinationPoint(330,0.005),
+    coords: new LatLon(51.7602440,-1.26647774),
     name: "The Bar"
   },
+  // doesn't seem accurate enough
+  // jt_bar_pump_left: {
+  //   coords: new LatLon(51.7602301,-1.26647203),
+  //   name: "The Bar - left pump"
+  // },
+  // jt_bar_pump_right: {
+  //   coords: new LatLon(51.7602419,-1.26645298),
+  //   name: "The Bar - right pump"
+  // },
   jt_centre: {
-    coords: (new LatLon(51.760161, -1.266465)).destinationPoint(80,0.002),
+    coords: new LatLon(51.7601654,-1.26637984),
     name: "JS Oxford"
   },
+  jt_corner: {
+    coords: new LatLon(51.7601633,-1.26631441),
+    name: "The corner"
+  },
+  jt_round_corner: {
+    coords: new LatLon(51.7602036,-1.26641366),
+    name: "People who can't see the stage" // round corner who make noise
+  },
+  jt_round_pillar: {
+    coords: new LatLon(51.7601567,-1.26643798),
+    name: "More people who can't see the stage" // on the right as you come in
+  },
   jt_stage: {
-    coords: (new LatLon(51.760161, -1.266465)).destinationPoint(225,0.010),
+    coords: new LatLon(51.7601072,-1.26650463),
     name: "Me"
   },
+
+
+
   st_clements: {
     coords: new LatLon(51.750794, -1.238725),
     name: "My House"
@@ -145,7 +199,7 @@ var places = {
   },
   jsac: {
     coords: new LatLon(51.476020, -3.17931),
-    name: "?"
+    name: "Super Secret Place" // it's cardiff! You're allowed to know, because you're reading this.
   }
 }
 
@@ -158,7 +212,11 @@ var origin = places.jt.coords,
 
 
 
-function display(place){ 
+function display(place, instant){
+  if(instant){
+    current = place.coords
+  }
+
   var t = new TWEEN.Tween( { lon: current.lon, lat: current.lat } )
     .to( place.coords, 3000 )
     .onStart( function(){
@@ -168,7 +226,7 @@ function display(place){
       var distance = origin.distanceTo(this);
       var bearing = origin.bearingTo(this) + offset_bearing;
       document.getElementById('place_distance').innerHTML = format_distance(distance);
-      document.getElementById('arrow').style.transform = 'rotate(' + bearing + 'deg)';
+      document.getElementById('arrow').style[transformProp] = 'rotate(' + bearing + 'deg)';
     })
     // .start();
 
@@ -501,5 +559,27 @@ function format_distance(km){
 }
 
 
+function vendorCSSProp (prop) {
+  var     vendorPrefixes = ['Moz','Webkit','O', 'ms']
+      ,   style     = document.createElement('div').style
+      ,   upper     = prop.charAt(0).toUpperCase() + prop.slice(1)
+      ,   pref, len = vendorPrefixes.length;
+
+  while (len--) {
+      if ((vendorPrefixes[len] + upper) in style) {
+          pref = (vendorPrefixes[len])
+      }
+  }
+  if (!pref && prop in style) {
+      pref = prop
+      return perf
+  }
+  if (pref) {
+      return pref + upper
+  }
+  return ''
+}
 
 
+
+// locator.start()
