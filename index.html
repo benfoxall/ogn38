@@ -18,7 +18,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
 </head>
-<body>
+<body class="">
 
   <div id="locator">
     <!-- <img id="floorplan" src="floorplan.jpg"> -->
@@ -39,18 +39,25 @@
   </div> -->
 
   <div id="content">
+
+    <h1>device context</h1>
+
+    <hr />
+
     <!-- <button id="fullscreen"><span class="icon-">start</span> Fullscreen</button> -->
 
     <h1 id="url">bit.ly/ogn38</h1>
 
-    <h1 class="full">Howdy, Geeks</h1>
+    <h1>
+      Howdy, Geeks
+    </h1>
 
     <p>I want to use your phone/tablet/laptop as part of my talk at #ogn38, and it would be really great if you could do some things to prepare</p>
 
     <ol>
       <li>Have this page handy on your device (bonus points if you save it to your homescreen)</li>
       <li>Disable your lock screen (we'll need about 15 minutes)</li>
-      <li>Share this url with anyone else who is coming along (the more the merrier)</li>
+      <li>Share this url with anyone else who is coming along (the more people we can get, the better)</li>
     </ol>
 
     <p>Also, make sure you've charged your device - this eats battery</p>
@@ -77,15 +84,103 @@
   )
   -->
   <div style="display:none">
+
     <section data-slide="hello">
       <h1>Hello, I'm Ben</h1>
-      <p>I'm going to show you some stuff</p>
+      <div class="badges">
+        <img src="badge-wo.png"/>
+        <img src="badge-jsoxford.png"/>
+        <img src="badge-adventure-club.png"/>
+      </div>
     </section>
 
-    <section data-slide="warning">
+    <section data-slide="demos">
       <h1>A note about demos&hellip;</h1>
       <h1 class="fragment">&hellip;and timing</h1>
     </section>
+
+    <section data-slide="title">
+      <h1>Physical devices and building for the web</h1>
+      <h2 class="fragment">
+        How can we change the way that we build websites by utilising the
+        physical properties and environment of the devices that we browse with.
+      </h2>
+    </section>
+
+    <section data-slide="meta">
+      <h1>The example we'll cover in this talk is <em>this talk</em></h1>
+
+      <h2>a web-based, multi-device interaction with our environment</h2>
+    </section>
+
+    <section data-slide="sync-intro">
+      <h1>For a multi-device interaction, our devices have to share data</h1>
+    </section>    
+
+    <section data-slide="sync-web">
+      <h1>Inter-device communication with the web</h1>
+      
+      <ul>
+        <li class="fragment">Server sent events</li>
+        <li class="fragment">Web sockets</li>
+        <li class="fragment">WebRTC</li>
+      </ul>
+
+    </section>
+
+    <section data-slide="sync-environment">
+      <h1>Inter-device communication with the world</h1>
+
+      <ul>
+        <li class="fragment">Audio</li>
+        <li class="fragment">Video</li>
+        <li class="fragment">Humans</li>
+      </ul>
+
+    </section>
+    
+    <section data-slide="warning">
+      <h1>
+        <span class="icon- warning">warning</span>
+          Your phone is about to start flashing on and off
+      </h1>
+    </section>
+
+    <!-- flashing on and off -->
+
+    <section data-slide="location-intro">
+      <h1>
+        Location and orientation
+      </h1>
+
+    </section>
+
+    <section data-slide="location-web">
+      <h3>
+        Location and orientation
+      </h3>
+      <h1>using the web</h1>
+
+      <ul>
+        <li class="fragment">Geolocation</li>
+        <li class="fragment">DeviceOrientation</li>
+      </ul>
+    </section>
+
+    <section data-slide="location-world">
+      <h3>
+        Location and orientation
+      </h3>
+      <h1>real world</h1>
+
+      <h2 class="fragment">&hellip;I think you're at the Jericho Tavern 
+      <!--(51&deg;45'36.6&quot;N 1&deg;15'59.3&quot;W)--></h2>
+
+      <h2 class="fragment">&hellip;facing the stage <!--(~225&deg;)--></h2>
+    </section>
+
+
+
   </div>
   
   <!-- inject:js -->
@@ -94,7 +189,6 @@
   <script src="bower_components/bean/bean.js"></script>
   <script src="bower_components/hammerjs/hammer.js"></script>
   <script src="bower_components/tweenjs/src/Tween.js"></script>
-  <script src="bower_components/fittext/fittext.js"></script>
   <script src="lib/latlong.js"></script>
   <script src="talk.js"></script>
   <script src="script.js"></script>

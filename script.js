@@ -159,20 +159,22 @@ var origin = places.jt.coords,
 
 
 function display(place){ 
-  document.getElementById('place_name').innerHTML = place.name;
-
-  new TWEEN.Tween( { lon: current.lon, lat: current.lat } )
-    .to( place.coords, 2000 )
+  var t = new TWEEN.Tween( { lon: current.lon, lat: current.lat } )
+    .to( place.coords, 3000 )
+    .onStart( function(){
+      document.getElementById('place_name').innerHTML = place.name;
+    })
     .onUpdate( function () {
       var distance = origin.distanceTo(this);
       var bearing = origin.bearingTo(this) + offset_bearing;
       document.getElementById('place_distance').innerHTML = format_distance(distance);
       document.getElementById('arrow').style.transform = 'rotate(' + bearing + 'deg)';
-
     })
-    .start();
+    // .start();
 
   current = place.coords;
+
+  return t;
 
 }
 
@@ -185,8 +187,10 @@ animate();
 
 
 
-
-
+function start_talk(){
+  var t = new Talk();
+  t.start();
+}
 
 
 
@@ -264,7 +268,9 @@ var r = repeater()
 
 })
 .when(8, function(timestamp){
-  console.log("8 times")
+  console.log("8 times");
+  this.pause();
+  start_talk();
   // this.pause();
   // show the animation
   // this.resume();
@@ -290,6 +296,7 @@ function timeoutQueue(initial){
 
 
 // detect repeated clicks/touches/keypresses
+// I've totally worked out how this could work better
 function repeater(){
   var self       = this,
       wait       = 2000, // time to wait before processing

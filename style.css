@@ -1,11 +1,70 @@
+html{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  min-height: 100%;
+  margin:0;
+}
 body{
   font-family: Helvetica Neue, sans-serif;
-  transition: background .25s;
+  transition: background .25s; 
+}
+body.inverse{
+  background: #000;
+}
+body.inverse #content{
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+
+}
+body.no-transition{
+  transition: none;
+}
+body.content-hidden #content{
+  display:none;
+}
+body.map{
+  background: url(floorplan.png);
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  /* margin: 0; */
+  /* padding: 0; */
+}
+body.direction #direction{
+  display: block;
 }
 a{
   color: #FF0000;
   text-decoration: none;
 }
+
+h1{
+  font-size: 3em;
+  /* max-width: 600px; */
+  margin: 0;
+}
+h2{
+  margin:0;
+}
+h3{
+  margin:0;
+}
+.badges img{
+  width:20%;
+  margin-right: 5%;
+  max-width: 50px
+}
+.warning{
+  display:block;text-align:center;margin-bottom:.5em;color:red
+}
+hr{
+  margin:10em 0;
+}
+
+
 .hyperlinks{
   padding:0;
 }
@@ -26,11 +85,13 @@ a{
 }
 #content{
   transition: opacity 1.5s; 
-}
-#content{
+  padding: 1em;
   opacity: 1;
   color: #242424;
   /*display: none;*/
+  max-width: 600px;
+  margin: auto;
+  /* text-align: center; */
 }
 .started #content {
   opacity: 0;
@@ -71,7 +132,7 @@ a{
 }
 
 #locator{
-  background-image: url(floorplan.jpg);
+  background-image: url(floorplan.png);
   
   display: block;
   position: absolute;
