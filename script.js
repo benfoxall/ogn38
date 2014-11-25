@@ -323,7 +323,7 @@ var r = repeater()
 
 })
 .when(6, function(timestamp){
-  showLastSlide()
+  displaySlide('last')
 })
 .when(8, function(timestamp){
   this.pause();
@@ -334,6 +334,9 @@ var r = repeater()
 })
 .when(10, function(){
   document.location = 'http://emergingtechweekender.co.uk/img/mentors-ben-f.jpg';
+})
+.when(12, function(){
+  displaySlide('sound-text')
 })
 
 
