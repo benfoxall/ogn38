@@ -250,7 +250,7 @@ function start_talk(){
 
 
 function vis_a(offset, done){
-  console.log("offf", offset)
+  // console.log("offf", offset)
 
   var _ = timeoutQueue();
 

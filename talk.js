@@ -860,7 +860,8 @@
 
   function last(talk){
     talk.queue(function(){
-      body_className('')
+      body_className('');
+      body_css('backgroundColor', '#fff')
     })
 
 
