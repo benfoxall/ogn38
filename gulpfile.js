@@ -23,13 +23,14 @@ var paths = {
   js:[
     "./bower_components/bean/bean.js",
     "./bower_components/hammerjs/hammer.js",
-    "./lib/latlong.js",
     "./bower_components/tweenjs/src/Tween.js",
+    "./lib/latlong.js",
+    "./talk.js",
     "./script.js"
   ],
   css: ['style.css','icons/style.css'],
 
-  assets: ['icons/ps*', 'floorplan.jpg', '*.mp3']
+  assets: ['icons/ps*', '*.png', '*.jpg', '*.mp3']
 }
 
 
