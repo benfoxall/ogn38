@@ -49,6 +49,14 @@
     body.style[prop] = value
   }
 
+  // var html = document.getElementsByTagName('html')[0];
+  // function html_className(className){
+  //   html.className = className
+  // }
+  // function html_css(prop, value){
+  //   html.style[prop] = value
+  // }
+
 
 
 
@@ -62,9 +70,7 @@
     inputLocation(this);
     locationSpecific(this);
 
-    // TODO
-    // screenShare(this);
-
+    screenShare(this);
   }
 
 
@@ -170,7 +176,7 @@
     talk.pause(5000)
 
     talk.fragment()
-    talk.pause(5000)
+    talk.pause(15000)
 
     talk.slide('location-world')
     talk.pause(10000)
@@ -179,22 +185,22 @@
     talk.pause(7000)
     
     talk.fragment()
-    talk.pause(5000)
+    talk.pause(10000)
 
   }
 
   function locationGeneral(talk){
     talk.queue(function(){
-      body_className('content-hidden map')
+      body_className('map')
     })
+    talk.slide('orientation-align')
 
     talk.pause(10000)
 
-    talk.queue(function(){
-      body_className('content-hidden map direction')
-    })
-
     talk.queue(display(places.pheonix, true))
+    talk.queue(function(){
+      body_className('content-hidden direction')
+    })
     talk.pause(6000)
 
     talk.queue(display(places.pitt_rivers))
@@ -220,10 +226,16 @@
   function inputLocation(talk){
 
     talk.queue(function(){
-      body_className('content-hidden')
+      body_className('')
     })
 
-    talk.pause(4000)
+    talk.slide('location-align')
+
+    talk.pause(6000)
+
+    talk.queue(function(){
+      body_className('content-hidden')
+    })
 
     talk.queue(function(){
       locator.start()
@@ -275,7 +287,75 @@
 
   }
 
+  function screenShare(talk){
+    talk.queue(function(){
+      body_className('')
+      // to it doesn't transition weird
+      body_css('backgroundSize', '100%')
+    })
 
+    talk.slide('lets-do-stuff')
+    talk.pause(10000)
+
+    talk.slide('screensharing')
+    talk.pause(5000)
+    talk.queue(function(){
+      body_className('screensharing')
+    })
+
+    talk.pause(10000)
+
+    talk.queue(function(){
+      body_css('backgroundSize', '1000%')
+      body_css('backgroundPosition', (x*100) + '% ' + (y*100) + '%')
+    })
+
+
+    talk.pause(20000)
+
+    talk.queue(function(){
+      body_className('content-hidden no-transition')
+      body_css('backgroundColor', '#000')
+    })
+
+    talk.pause(15000)
+
+
+    // hsl up
+    talk.queue(
+      new TWEEN.Tween({h:0,s:1,l:0})
+        .to({h:y * 120,s:1,l:0.5}, 5000)
+        .onUpdate(function() {
+          bg(hsl_basic(this.h,this.s,this.l));
+        })
+    )
+
+    talk.pause(10000)
+
+    // hsl across
+    talk.queue(
+      new TWEEN.Tween({h:y * 120,s:1,l:0.5})
+        .to({h:x * 120,s:1,l:0.5}, 5000)
+        .onUpdate(function() {
+          bg(hsl_basic(this.h,this.s,this.l));
+        })
+    )
+
+    talk.pause(10000)
+
+    // back to black
+    talk.queue(
+      new TWEEN.Tween({h:x * 120,s:1,l:0.5})
+        .to({h:0,s:0,l:0}, 5000)
+        .onUpdate(function() {
+          bg(hsl_basic(this.h,this.s,this.l));
+        })
+    )
+
+    talk.pause(10000)
+
+
+  }
 
   /****
   Support

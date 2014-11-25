@@ -1,3 +1,4 @@
+/* TODO - vendorise */
 html{
   height: 100%;
   margin: 0;
@@ -30,11 +31,21 @@ body.map{
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  /* margin: 0; */
-  /* padding: 0; */
 }
 body.direction #direction{
   display: block;
+}
+body.screensharing{
+  background-color:#000;
+  background-image: url(screenshare.jpg);
+  background-size:20px;
+  background-repeat: no-repeat;
+  transition: background 5s;
+}
+body.screensharing h1{
+  color:#fff;
+  text-shadow:0 0 2px #000;
+
 }
 a{
   color: #FF0000;
@@ -203,7 +214,7 @@ hr{
   color: #fff;
 }
 
-.s-x body{
+.s-x{
   background: #ccc;
 }
 
@@ -216,11 +227,11 @@ hr{
   color: #4CDD4E;
 }
 
-.s-1 body{
+.s-1{
   background: #000;
 }
 
-.s-2 body{
+.s-2{
   background: #08f;
 }
 .s-2 #ok{
@@ -228,14 +239,14 @@ hr{
 }
 
 
-.s-3 body{
+.s-3{
   background: #f08;
 }
 .s-3 #ok{
   color: #fff;
 }
 
-.s-4 body{
+.s-4{
   background: #fc0;
 }
 .s-4 #ok{
@@ -243,7 +254,7 @@ hr{
 }
 
 
-.s-5 body{
+.s-5{
   background: #ff0;
 }
 .s-5 #ok{
@@ -251,7 +262,7 @@ hr{
 }
 
 
-.s-6 body{
+.s-6{
   background: #fff;
 }
 .s-6 #ok{
@@ -259,7 +270,7 @@ hr{
 }
 
 
-.s-7 body{
+.s-7{
   background: #fff;
 }
 .s-7 #ok{
@@ -267,7 +278,7 @@ hr{
 }
 
 
-.s-8 body{
+.s-8{
   background: #fff;
 }
 .s-8 #ok{

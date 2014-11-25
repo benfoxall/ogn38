@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug</title>
+    <meta charset="utf-8">
+    <style type="text/css"></style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style type="text/css">
+        .debug iframe{
+            width:250px;
+            height:150px;
+        }
+        .debug{
+            width:800px;
+
+        }
+    </style>
+
+    <script type="text/javascript">
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        window.context = parent.context || new AudioContext();
+
+
+    </script>
+</head>
+<body onload="setTimeout(setup,100)">
+
+<div class="debug">
+    <iframe src="index.html" data-debug=".1 .1"></iframe>
+    <iframe src="index.html" data-debug=".5 .15"></iframe>
+    <iframe src="index.html" data-debug=".9 .2"></iframe>
+</div>
+
+<div class="debug">
+    <iframe src="index.html" data-debug=".1 .45"></iframe>
+    <iframe src="index.html" data-debug=".5 .5"></iframe>
+    <iframe src="index.html" data-debug=".9 .55"></iframe>
+</div>
+
+<div class="debug">
+    <iframe src="index.html" data-debug=".1 .85"></iframe>
+    <iframe src="index.html" data-debug=".5 .9"></iframe>
+    <iframe src="index.html" data-debug=".9 .95"></iframe>
+</div>
+
+<p>
+    <button onclick="demo(false)">GO</button>
+</p>
+
+
+
+<script type="text/javascript">
+
+function setup(){
+    [].forEach.call(document.querySelectorAll('.debug iframe'), function(frame){
+        var xy = frame.dataset.debug.split(' ').filter(I).map(parseFloat);
+        frame.contentWindow.postMessage({setup:{x:xy[0],y:xy[1]}}, '*')
+    })
+    function I(value){return value}
+}
+
+
+function demo(staggered){
+    [].forEach.call(document.querySelectorAll('.debug iframe'), function(frame){
+        if(staggered){
+            setTimeout(function(){
+                frame.contentWindow.postMessage({go:true},'*')
+            }, Math.random()*500)
+        } else {
+            frame.contentWindow.postMessage({go:true},'*')    
+        }
+    })
+}
+
+
+
+</script>
+
+
+</body>
+</html>

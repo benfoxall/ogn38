@@ -3,13 +3,10 @@
 
 var transformProp = vendorCSSProp('transform');
 
-function htmlC(name){
-  document.getElementsByTagName('html')[0].className = name
-}
 
 function _className(className){
   return function(){
-    document.getElementsByTagName('html')[0].className = className   
+    document.getElementsByTagName('body')[0].className = className   
   }
 }
 
@@ -284,19 +281,19 @@ function vis_a(offset, done){
 
   _(2000)
 
-  for(var i = 1 ; i <= 4; i++){_
-    (500)
-    (_className(state(i%4)))
-  }
+  // for(var i = 1 ; i <= 4; i++){_
+  //   (500)
+  //   (_className(state(i%4)))
+  // }
 
-  _(2000)
+  // _(2000)
 
-  for(var i = 1 ; i <= 4; i++){_
-    (250)
-    (_className(state(i%4)))
-  }
+  // for(var i = 1 ; i <= 4; i++){_
+  //   (250)
+  //   (_className(state(i%4)))
+  // }
 
-  _(2000)
+  // _(2000)
 
   (_className(state('x')))
 
@@ -581,5 +578,20 @@ function vendorCSSProp (prop) {
 }
 
 
+// debug
+if(window.parent !== window){
+  console.log("listening")
+  window.addEventListener('message', function(e){
+    
+    var data = e.data || {};
+    if(data.setup){
+      x = data.setup.x;
+      y = data.setup.y;
+    } else if(data.go){
+      start_talk()
+    } else {
+      console.log("unhandled message ", data)
+    }
 
-// locator.start()
+  }, false)
+}
