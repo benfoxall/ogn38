@@ -62,15 +62,17 @@
 
   // create the talk object
   function Talk(){
-    intro(this);
-    flashing(this);
+    // intro(this);
+    // flashing(this);
 
-    locationIntro(this);
-    locationGeneral(this);
-    inputLocation(this);
-    locationSpecific(this);
+    // locationIntro(this);
+    // locationGeneral(this);
+    // inputLocation(this);
+    // locationSpecific(this);
 
-    screenShare(this);
+    // screenShare(this);
+
+    movement(this);
   }
 
 
@@ -353,6 +355,129 @@
     )
 
     talk.pause(10000)
+
+
+  }
+
+
+
+  function movement(talk){
+    // console.log(x,y)
+    var a    = Math.atan2(x-.5, y-.5);
+    if(a < 0){
+      a   = (a + Math.PI*2);// 0 -> Math.PI*2
+    }
+
+    talk.queue(function(){
+      body_className('no-transition')
+      // body_css('backgroundColor', '#000')
+    })
+
+    talk.slide('movement')
+    talk.pause(10000)
+
+    talk.slide('blank')
+
+
+    this.pause(10000)
+
+    // hsl across (static)
+    talk.queue(
+      new TWEEN.Tween({h:0,s:1,l:0})
+        .to({h:x * 120,s:1,l:0.5}, 4000)
+        .onUpdate(function() {
+          bg(hsl_basic(this.h,this.s,this.l));
+        })
+    )
+
+    // hsl across + back (moving)
+    talk.queue(
+      new TWEEN.Tween({h:x * 120,s:1,l:0.5})
+        .to({h:(x * 120)+240,s:1,l:0.5}, 10000)
+        .onUpdate(function() {
+          bg(hsl_basic(this.h,this.s,this.l));
+        })
+        .repeat(1)
+        .yoyo(true)
+    )
+
+    talk.queue(
+      new TWEEN.Tween({h:x * 120,s:1,l:0.5})
+        .to({h:0,s:0,l:0}, 5000)
+        .onUpdate(function() {
+          bg(hsl_basic(this.h,this.s,this.l));
+        })
+    )
+
+
+    // black/white
+
+    this.pause(3000)
+
+    // 'on' up (and back)
+    talk.queue(
+      new TWEEN.Tween({t:1})
+        .to({t:0}, 2500)
+        // .onStart(master ? function(){play('spiral')} : noop)
+        .onUpdate(function() {
+          bg(grey(this.t < y ? 1 : 0));
+        })
+        .repeat(1)
+        .yoyo(true)
+    )
+
+    // 'on' left (and back)
+    talk.queue(
+      new TWEEN.Tween({t:1})
+        .to({t:0}, 2500)
+        // .onStart(master ? function(){play('spiral')} : noop)
+        .onUpdate(function() {
+          bg(grey(this.t < x ? 1 : 0));
+        })
+        .repeat(1)
+        .yoyo(true)
+    )
+
+    // 'on' right (and back)
+    talk.queue(
+      new TWEEN.Tween({t:1})
+        .to({t:0}, 2500)
+        // .onStart(master ? function(){play('spiral')} : noop)
+        .onUpdate(function() {
+          bg(grey(this.t < (1-x) ? 1 : 0));
+        })
+        .repeat(1)
+        .yoyo(true)
+    )
+
+    // this.footerHTML("rotation")
+
+    this.pause(5000)
+
+    // 'on' rotate
+    talk.queue(
+      new TWEEN.Tween({a:-1})
+        .to({a:(Math.PI*2)}, 7000)
+        .easing(TWEEN.Easing.Linear.None)
+        .onUpdate(function() {
+          bg(grey(a > this.a ? 0 : 1));
+        })
+    )
+
+
+    // 'off' rotate
+    talk.queue(
+      new TWEEN.Tween({a:0})
+        .to({a:(Math.PI*2)+1}, 4000)
+        .easing(TWEEN.Easing.Linear.None)
+        .onUpdate(function() {
+          bg(grey(a > this.a ? 1 : 0));
+        })
+    )
+
+
+    this.pause(5000)
+
 
 
   }
