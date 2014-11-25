@@ -14,7 +14,7 @@
 
     var play = window.play = (function(sounds){
 
-        var buffers = {}, firstLoaded;
+        var buffers = {}, firstLoaded, hasPlayed;
 
         for(sound in sounds){
             if(sounds.hasOwnProperty(sound))
@@ -24,6 +24,8 @@
 
         return function play(name){
             if(!name && firstLoaded){
+              if(hasPlayed) return;
+              hasPlayed = true;
 
               var buffer = buffers[firstLoaded];
               var source = context.createBufferSource();
@@ -142,7 +144,10 @@
 
     // movement(this);
 
-    capabilitySharing(this)
+    // capabilitySharing(this)
+    // capabilityCombining(this);
+
+    last(this)
   }
 
 
@@ -433,13 +438,15 @@
 
   function movement(talk){
     // console.log(x,y)
-    var a    = Math.atan2(x-.5, y-.5);
-    if(a < 0){
-      a   = (a + Math.PI*2);// 0 -> Math.PI*2
-    }
+    var a = 0;
 
     talk.queue(function(){
-      body_className('no-transition')
+      a = Math.atan2(x-.5, y-.5);
+      if(a < 0){
+        a   = (a + Math.PI*2);// 0 -> Math.PI*2
+      }
+
+      body_className('no-transition inverse')
       // body_css('backgroundColor', '#000')
     })
 
@@ -686,6 +693,196 @@
 
 
 
+  function capabilityCombining(talk){
+
+    var master, a = 0;
+
+    talk.queue(function(){
+      master = y < 0.15;
+
+      a = Math.atan2(x-.5, y-.5);
+      if(a < 0){
+        a   = (a + Math.PI*2);// 0 -> Math.PI*2
+      }
+
+      // console.log(a)
+
+      body_className('no-transition inverse')
+      // body_css('backgroundColor', '#000')
+    })
+
+    talk.slide('capability-combining')
+    talk.pause(10000)
+
+    talk.slide('blank')
+
+
+    talk.pause(15000)
+
+
+
+    // sound moving down
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 7000)
+        .onStart(function(){
+          setTimeout(function(){play('bubbles')}, y*3000)
+        })
+        .onUpdate(noop)
+    )
+
+
+    talk.pause(4000);
+
+    // sound moving up
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 7000)
+        .onStart(function(){
+          setTimeout(function(){play('bubbles')}, (1-y)*3000)
+        })
+        .onUpdate(noop)
+    )
+
+    talk.pause(5000);
+
+
+
+    // sound moving around
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 10000)
+        .onStart(function(){setTimeout(function(){
+          play('bubbles');
+        }, (a/(Math.PI*2))*10000)})
+        .onUpdate(noop)
+    )
+
+    // faster
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 5000)
+        .onStart(function(){setTimeout(function(){
+          play('bubbles');
+        }, (a/(Math.PI*2))*5000)})
+        .onUpdate(noop)
+    )
+
+    // and faster
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 3000)
+        .onStart(function(){setTimeout(function(){
+          play('bubbles');
+        }, (a/(Math.PI*2))*3000)})
+        .onUpdate(noop)
+    )
+
+    talk.pause(10000);
+
+    // sound moving around with light
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 10000)
+        .onStart(function(){setTimeout(function(){
+          play('bubbles');
+          bg('#fff');
+        }, (a/(Math.PI*2))*10000)})
+        .onUpdate(noop)
+    )
+
+
+    // faster (blue)
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 5000)
+        .onStart(function(){setTimeout(function(){
+          play('bubbles');
+          bg('#08f');
+        }, (a/(Math.PI*2))*5000)})
+        .onUpdate(noop)
+    )
+
+
+    // and faster (pink)
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 5000)
+        .onStart(function(){setTimeout(function(){
+          play('bubbles');
+          bg('#f08');
+        }, (a/(Math.PI*2))*5000)})
+        .onUpdate(noop)
+    )
+
+
+    // across (hsv)
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 7000)
+        .onStart(function(){
+          setTimeout(function(){
+            play('bubbles');
+            bg(hsl_basic((a/(Math.PI*2))*360,1,.5));
+          }, x*7000)
+        })
+        .onUpdate(noop)
+    )
+
+    // back (white)
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 7000)
+        .onStart(function(){
+          setTimeout(function(){
+            play('bubbles');
+            bg('#fff');
+          }, (1-x)*7000)
+        })
+        .onUpdate(noop)
+    )
+
+
+    talk.pause(3000);
+
+    // fizz (at same time) back to the bottom
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 2000)
+        .onStart(this.master ? noop: function(){play('spiral')})
+        .onUpdate(function() {
+          bg(grey(this.t < y ? 1 : 0));
+        })
+    )
+  }
+
+
+
+  function last(talk){
+    talk.queue(function(){
+      body_className('')
+    })
+
+
+
+    talk.slide('last')
+    talk.pause(8000)
+    talk.fragment()
+    talk.pause(2000)
+    talk.fragment()
+    talk.pause(4000)
+    talk.fragment()
+
+    // thanks
+    talk.pause(6000)
+    talk.fragment()
+
+    // 6 times to skip
+    talk.pause(10000) 
+    talk.fragment()
+  }
+
+
   /****
   Support
   ****/
@@ -764,7 +961,16 @@
   }
 
 
-  return exports.Talk = Talk;
+  exports.Talk = Talk;
+
+  exports.showLastSlide = function(){
+    document.getElementById('content').innerHTML = slideContent('last'); 
+
+     var fragments = document.getElementsByClassName('fragment');
+     for (var i = fragments.length - 1; i >= 0; i--) {
+       fragments[i].className = 'fragment-active'
+     }
+  }
 
 
 

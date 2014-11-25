@@ -323,13 +323,18 @@ var r = repeater()
 
 })
 .when(8, function(timestamp){
-  console.log("8 times");
   this.pause();
+
+  // todo delay based on timestamp?
+  // console.log(timestamp)
   start_talk();
-  // this.pause();
-  // show the animation
-  // this.resume();
 })
+
+.when(6, function(timestamp){
+  showLastSlide()
+})
+
+
 
 
 // pretty rubbish animation keyframing (but interesting api)
@@ -387,6 +392,11 @@ function repeater(){
     timestamps.unshift(+new Date);
     clearTimeout(timeout);
     timeout = setTimeout(process, wait);
+
+    // play a blank sound for iOS to start audio
+    if(window.play){
+      window.play();
+    }
   }
 
   //check which handlers should be fired
