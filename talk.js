@@ -132,20 +132,20 @@
 
   // create the talk object
   function Talk(){
-    // intro(this);
-    // flashing(this);
+    intro(this);
+    flashing(this);
 
-    // locationIntro(this);
-    // locationGeneral(this);
-    // inputLocation(this);
-    // locationSpecific(this);
+    locationIntro(this);
+    locationGeneral(this);
+    inputLocation(this);
+    locationSpecific(this);
 
-    // screenShare(this);
+    screenShare(this);
 
-    // movement(this);
+    movement(this);
 
-    // capabilitySharing(this)
-    // capabilityCombining(this);
+    capabilitySharing(this)
+    capabilityCombining(this);
 
     last(this)
   }
