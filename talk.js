@@ -958,7 +958,7 @@
     if(kill) return kill = isRendering = false;
     requestAnimationFrame(render);
 
-    TWEEN.update();
+    TWEEN.update(Date.now());
   }
 
 
