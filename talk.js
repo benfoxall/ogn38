@@ -867,7 +867,7 @@
 
 
     talk.slide('last')
-    talk.pause(8000)
+    talk.pause(11000)
     talk.fragment()
     talk.pause(2000)
     talk.fragment()
@@ -875,7 +875,7 @@
     talk.fragment()
 
     // thanks
-    talk.pause(6000)
+    talk.pause(6500)
     talk.fragment()
 
     // 6 times to skip
@@ -937,7 +937,7 @@
   }
 
   Talk.prototype.start = function(){
-    this.firstTween.start();
+    this.firstTween.start(Date.now());
     startRendering();
   }
 
@@ -964,15 +964,14 @@
 
   exports.Talk = Talk;
 
-  exports.showLastSlide = function(){
-    document.getElementById('content').innerHTML = slideContent('last'); 
+  exports.displaySlide = function(key){
+    document.getElementById('content').innerHTML = slideContent(key); 
 
-     var fragments = document.getElementsByClassName('fragment');
-     for (var i = fragments.length - 1; i >= 0; i--) {
-       fragments[i].className = 'fragment-active'
-     }
+    var fragments = document.getElementsByClassName('fragment');
+    for (var i = fragments.length - 1; i >= 0; i--) {
+      fragments[i].className = 'fragment-active'
+    }
   }
-
 
 
 })(this);
