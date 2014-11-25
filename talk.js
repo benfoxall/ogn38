@@ -6,6 +6,74 @@
     return el ? el.innerHTML : 'no content for ' + key;
   }
 
+  var play = noop;
+
+  try {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    window.context = parent.context || new AudioContext();
+
+    var play = window.play = (function(sounds){
+
+        var buffers = {}, firstLoaded;
+
+        for(sound in sounds){
+            if(sounds.hasOwnProperty(sound))
+                request(sound, sounds[sound]) // load it
+            
+        }
+
+        return function play(name){
+            if(!name && firstLoaded){
+
+              var buffer = buffers[firstLoaded];
+              var source = context.createBufferSource();
+              var gainNode = context.createGain();
+              gainNode.gain.value = 0.05;
+              source.buffer = buffer;
+              source.connect(gainNode);
+              gainNode.connect(context.destination);
+
+              console.log("playing blank", firstLoaded)
+
+              return;
+            }
+
+            var buffer = buffers[name];
+            if(buffer){
+                  var source = context.createBufferSource();
+                  source.buffer = buffer;
+                  source.connect(context.destination);
+                  source.start(0);
+            }
+        }
+
+        function request(name,url){
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.responseType = 'arraybuffer';
+
+          // Decode asynchronously
+          xhr.onload = function() {
+            context.decodeAudioData(xhr.response, function(buffer) {
+              buffers[name] = buffer;
+              if(!firstLoaded) firstLoaded = name;
+            }, function(e){
+                console.log("an error occured requesting ", url, e)
+            });
+          }
+          xhr.send();
+        }
+    })({
+        'bubbles': '_bubbles.mp3',
+        'spiral': '_dotted-spiral.mp3',
+        // 'clap': '_clap.mp3',
+        // 'ting': '_ting.mp3',
+    })
+
+  } catch (e) {
+    console.log("couldn't load audio", e)
+  }
+
   // This generates a stepper that I can only really describe when
   // I'm at a whiteboard and have three different coloured pens
   function generateStepper(steps, initial){
@@ -72,7 +140,9 @@
 
     // screenShare(this);
 
-    movement(this);
+    // movement(this);
+
+    capabilitySharing(this)
   }
 
 
@@ -482,9 +552,145 @@
 
   }
 
+
+
+
+  function capabilitySharing(talk){
+
+    var master;
+
+    talk.queue(function(){
+      master = y < 0.15;
+
+      body_className('no-transition inverse')
+      // body_css('backgroundColor', '#000')
+    })
+
+    talk.slide('capability-sharing')
+    talk.pause(10000)
+
+    talk.slide('blank')
+
+
+    talk.pause(15000)
+
+
+    // flash on and off
+    for(var i=0; i < 2; i++){
+
+      // on with beat from master
+      talk.queue(
+        new TWEEN.Tween({t:0})
+          .to({t:1}, 500)
+          .onStart(function(){if(master)play('bubbles')})
+          .onUpdate(function() {
+            bg(grey(this.t));
+          })
+      )
+
+      talk.pause(1500)
+
+      // off with a beat from the master
+      talk.queue(
+        new TWEEN.Tween({t:1})
+          .to({t:0}, 500)
+          .onStart(function(){if(master)play('bubbles')})
+          .onUpdate(function() {
+            bg(grey(this.t));
+          })
+      )
+
+      talk.pause(3500)
+    }
+
+
+    // on to the right
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 1000)
+        .onStart(function(){if(master)play('bubbles')})
+        .onUpdate(function() {
+          bg(grey(this.t > x ? 1 : 0));
+        })
+    )
+    talk.pause(1000)
+
+    // and back
+    talk.queue(
+      new TWEEN.Tween({t:1})
+        .to({t:0}, 1000)
+        .onStart(function(){if(master)play('bubbles')})
+        .onUpdate(function() {
+          bg(grey(this.t > x ? 1 : 0));
+        })
+    )
+    talk.pause(3000)
+
+
+    // on to the left
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 1000)
+        .onStart(function(){if(master)play('bubbles')})
+        .onUpdate(function() {
+          bg(grey(this.t > (1-x) ? 1 : 0));
+        })
+    )
+    talk.pause(1000)
+
+    // and back
+    talk.queue(
+      new TWEEN.Tween({t:1})
+        .to({t:0}, 1000)
+        .onStart(function(){if(master)play('bubbles')})
+        .onUpdate(function() {
+          bg(grey(this.t > (1-x) ? 1 : 0));
+        })
+    )
+    talk.pause(3000)
+
+
+
+    // on to the top
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 1000)
+        .onStart(function(){if(master)play('bubbles')})
+        .onUpdate(function() {
+          bg(grey(this.t > y ? 1 : 0));
+        })
+    )
+    talk.pause(1000)
+
+
+    talk.pause(4000)
+
+
+    // down with fizz
+    talk.queue(
+      new TWEEN.Tween({t:0})
+        .to({t:1}, 2000)
+        .onStart(function(){if(master)play('spiral')})
+        .onUpdate(function() {
+          bg(grey(this.t < y ? 1 : 0));
+        })
+    )
+
+
+    talk.pause(5000)
+    
+    // this.footerHTML("")
+
+  }
+
+
+
+
   /****
   Support
   ****/
+
+  function noop(){}
 
   Talk.prototype.slide = function(key) {
     this.queue(function(){
