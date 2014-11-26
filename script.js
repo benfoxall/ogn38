@@ -184,7 +184,7 @@ var places = {
   },
   pheonix: {
     coords: new LatLon(51.760297, -1.266662),
-    name: "Pheonix Picture House"
+    name: "Phoenix Picture House"
   },
   pitt_rivers: {
     coords: new LatLon(51.758787, -1.255327),
