@@ -990,6 +990,8 @@
   exports.Talk = Talk;
 
   exports.displaySlide = function(key){
+    body_className('')
+
     document.getElementById('content').innerHTML = slideContent(key); 
 
     var fragments = document.getElementsByClassName('fragment');
