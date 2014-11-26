@@ -50,7 +50,7 @@ var locator = (function(){
       window_height = window.innerHeight;
 
   bean.on(window,'resize', function(){
-    window_width = window.innerWidth,
+    window_width = window.innerWidth;
     window_height = window.innerHeight;
   })
 
@@ -101,6 +101,8 @@ var locator = (function(){
   return {
     start:function(){
       if(active) return;
+      window_width = window.innerWidth;
+      window_height = window.innerHeight;
       active = true;
       render();
       element.className = 'active';  
