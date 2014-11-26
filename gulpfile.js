@@ -30,7 +30,7 @@ var paths = {
   ],
   css: ['style.css','icons/style.css'],
 
-  assets: ['icons/ps*', '*.png', '*.jpg', '*.mp3']
+  assets: ['icons/ps*', '*.png', '*.jpg', '*.mp3', 'manifest.json']
 }
 
 
