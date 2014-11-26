@@ -336,7 +336,7 @@ var r = repeater()
   document.location = 'http://emergingtechweekender.co.uk/img/mentors-ben-f.jpg';
 })
 .when(12, function(){
-  displaySlide('sound-text')
+  displaySlide('sound-test')
 })
 
 
